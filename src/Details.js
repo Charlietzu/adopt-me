@@ -2,11 +2,7 @@ import { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 class Details extends Component {
-  constructor() {
-    super();
-
-    this.state = { loading: true };
-  }
+  state = { loading: true };
 
   async componentDidMount() {
     const res = await fetch(
@@ -14,11 +10,14 @@ class Details extends Component {
     );
 
     const json = await res.json();
-
     this.setState(Object.assign({ loading: false }, json.pets[0]));
   }
 
   render() {
+    if (this.state.loading) {
+      return <h2>Loading...</h2>;
+    }
+
     const { animal, breed, city, state, description, name } = this.state;
 
     return (
